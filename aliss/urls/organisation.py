@@ -13,6 +13,10 @@ urlpatterns = [
         OrganisationCreateView.as_view(),
         name='organisation_create'
     ),
+     url(r'^create-service/$',
+        OrganisationCreateServiceView.as_view(),
+        name='organisation_create_service'
+    ),
     url(r'^edit/(?P<pk>[0-9A-Za-z\-]+)/$',
         OrganisationUpdateView.as_view(),
         name='organisation_edit'
@@ -32,6 +36,10 @@ urlpatterns = [
     url(r'^potential-create/$',
         OrganisationPotentialCreateView.as_view(),
         name='potential_create'
+    ),
+    url(r'^potential-create-service/$',
+        OrganisationPotentialCreateServiceView.as_view(),
+        name='potential_create_service'
     ),
     url(r'^search/new/$',
         TemplateView.as_view(template_name="organisation/organisation-search.html"),

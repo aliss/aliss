@@ -106,6 +106,75 @@ class OrganisationCreateView(LoginRequiredMixin, CreateView):
         messages.success(self.request, msg)
         return HttpResponseRedirect(self.get_success_url())
 
+class OrganisationCreateServiceView(LoginRequiredMixin, CreateView):
+    model = Organisation
+    template_name = 'organisation/create_service.html'
+    form_class = OrganisationForm
+
+    def get_context_data(self, **kwargs):
+        context = super(OrganisationCreateServiceView, self).get_context_data(**kwargs)
+        if (('claim_form' not in kwargs) or (kwargs['claim_form'] == None)):
+            context['claim_form'] = ClaimForm(prefix="claim",
+                initial={ 'phone': self.request.user.phone_number })
+        else:
+            context['show_claim_form'] = True
+        return context
+
+    def get_success_url(self):
+        return reverse('service_create', kwargs={'pk': self.object.pk })
+
+    def send_new_org_email(self, organisation):
+        message = '{organisation} has been added to ALISS by {user}.'.format(organisation=organisation, user=organisation.created_by)
+        if organisation.published:
+            message += '\n\nIt has automatically been published. '
+            message += 'You view the new organisation here: {link}'.format(
+                link=self.request.build_absolute_uri(reverse('organisation_detail_slug', kwargs={ 'slug': self.object.slug }))
+            )
+        else:
+            message += '\n\nGo to {link} to approve it.'.format(link=self.request.build_absolute_uri(reverse('organisation_unpublished')))
+
+        send_mail(
+            '{organisation} was added on ALISS'.format(organisation=organisation),
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            ['hello@aliss.org'],
+            fail_silently=True,
+        )
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        claim_form = None
+        self.object = None
+
+        if request.POST.get('claim'):
+            claim_form = ClaimForm(request.POST, prefix='claim')
+
+        claim_valid = (claim_form == None or claim_form.is_valid())
+        form_valid = form.is_valid()
+        if (form_valid and claim_valid):
+            return self.form_valid(form, claim_form)
+        else:
+            return self.form_invalid(form, claim_form)
+
+    def form_invalid(self, form, claim_form):
+        return self.render_to_response(self.get_context_data(form=form, claim_form=claim_form))
+
+    def form_valid(self, form, claim_form):
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.published = self.request.user.is_editor or self.request.user.is_staff
+        self.object.save()
+
+        if claim_form:
+            Claim.objects.create(
+                user=self.request.user, organisation=self.object,
+                comment=claim_form.cleaned_data.get('comment'))
+
+        self.send_new_org_email(self.object)
+        msg = '<p>{name} has been successfully created.</p>'.format(name=self.object.name)
+        messages.success(self.request, msg)
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class OrganisationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Organisation
@@ -200,6 +269,28 @@ class OrganisationDeleteView(UserPassesTestMixin, DeleteView):
 
 class OrganisationPotentialCreateView(MultipleObjectMixin, TemplateView):
     template_name = 'organisation/potential-create.html'
+    paginator_class = ESPaginator
+    paginate_by = 10
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        return self.render_to_response(self.get_context_data())
+
+    def get_queryset(self, *args, **kwargs):
+        connections.create_connection(
+            hosts=[settings.ELASTICSEARCH_URL], timeout=20, http_auth=(settings.ELASTICSEARCH_USERNAME, settings.ELASTICSEARCH_PASSWORD))
+        queryset = Search(index='organisation_search', doc_type='organisation')
+        query = self.request.GET.get('q')
+        if query:
+            if self.request.user.is_authenticated() and (self.request.user.is_editor or self.request.user.is_staff):
+                queryset = filter_organisations_by_query(queryset, query)
+            else:
+                queryset = filter_organisations_by_query_published(queryset, query)
+
+        return queryset
+
+class OrganisationPotentialCreateServiceView(MultipleObjectMixin, TemplateView):
+    template_name = 'organisation/potential-create-service.html'
     paginator_class = ESPaginator
     paginate_by = 10
 

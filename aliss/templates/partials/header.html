@@ -94,8 +94,9 @@
                                 <li{% if request.resolver_match.url_name == 'organisation_create' or request.resolver_match.url_name == 'organisation_search' %} class="active"{% endif %}>
                                     <a href="{% url 'potential_create' %}">Add an organisation</a>
                                 </li>
-                                <li{% if request.resolver_match.url_name == 'organisation_create' or request.resolver_match.url_name == 'organisation_search' %} class="active"{% endif %}>
-                                    <a href="{% url 'potential_create' %}">Add a service</a>
+                                <li{% if request.resolver_match.url_name == 'organisation_create_service' or request.resolver_match.url_name == 'organisation_search' %} class="active"{% endif %}>
+                                    <a href="{% url 'potential_create_service' %}">Add a service</a> 
+                                    <!-- create the new button for the claim a service from potential create-->
                                 </li>
                             </ul>
                         </nav>
