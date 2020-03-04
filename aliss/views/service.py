@@ -79,7 +79,54 @@ class ServiceCreateView(
                 'organisation_detail',
                 kwargs={'pk': self.object.organisation.pk}
             )
+class ServiceCreateClaimView(
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    OrganisationMixin,
+    CreateView
+):
 
+    model = Service
+    form_class = ServiceForm
+    template_name = 'service/create.html'
+
+    def test_func(self, user):
+        return self.get_organisation().is_edited_by(user)
+
+    def get_form_kwargs(self):
+        kwargs = super(ServiceCreateClaimView, self).get_form_kwargs()
+        kwargs.update({
+            'organisation': self.organisation,
+            'updated_by': self.request.user,
+            'created_by': self.request.user
+        })
+        return kwargs
+
+    def form_valid(self, form):
+        self.object = form.save()
+
+
+        messages.success(
+            self.request,
+            '{name} has been successfully created.'.format(
+                name=self.object.name
+            )
+        )
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        if (self.object.organisation.services.count() <= 1):
+            return reverse(
+                'organisation_confirm',
+                kwargs={'pk': self.object.organisation.pk}
+            )
+
+        else:
+            return reverse(
+                'organisation_detail',
+                kwargs={'pk': self.object.organisation.pk}
+            )
 class ServiceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Service
     form_class = ServiceForm
