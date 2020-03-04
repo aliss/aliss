@@ -59,6 +59,8 @@
           {% csrf_token %}
           {% include 'organisation/forms/organisation_form_service.html' %}
 
+
+
           <div class="inline-claim">
             <input id="data_standard_agreement_modal" type="checkbox" name="claim" {% if show_claim_form%} checked
               {% endif %}>
