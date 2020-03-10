@@ -106,6 +106,14 @@ class OrganisationCreateView(LoginRequiredMixin, CreateView):
         messages.success(self.request, msg)
         return HttpResponseRedirect(self.get_success_url())
 
+
+
+
+
+
+
+
+
 class OrganisationCreateServiceView(LoginRequiredMixin, CreateView):
     model = Organisation
     template_name = 'organisation/create_service.html'
@@ -176,6 +184,15 @@ class OrganisationCreateServiceView(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+
+
+
+
+
+
+
+
+
 class OrganisationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Organisation
     template_name = 'organisation/update.html'
@@ -203,7 +220,6 @@ class OrganisationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView
             )
         )
         return HttpResponseRedirect(self.get_success_url())
-
 
 class OrganisationListView(StaffuserRequiredMixin, FilterView):
     template_name = 'organisation/list.html'
