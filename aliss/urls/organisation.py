@@ -5,6 +5,7 @@ from aliss.views.organisation import *
 from aliss.views import (
     LocationCreateView,
     ServiceCreateView,
+    ServiceCreateClaimView,
     TemplateView
 )
 
@@ -60,6 +61,10 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9A-Za-z\-]+)/services/create/$',
         ServiceCreateView.as_view(),
         name='service_create'
+    ),
+     url(r'^(?P<pk>[0-9A-Za-z\-]+)/services/create-claim/$',
+        ServiceCreateClaimView.as_view(),
+        name='service_create_claim'
     ),
     url("(?P<pk>[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12})/publish/",
         OrganisationPublishView.as_view(),

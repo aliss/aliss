@@ -88,7 +88,7 @@ class ServiceCreateClaimView(
 
     model = Service
     form_class = ServiceForm
-    template_name = 'service/create.html'
+    template_name = 'service/create-claim.html'
 
     def test_func(self, user):
         return self.get_organisation().is_edited_by(user)
@@ -127,6 +127,11 @@ class ServiceCreateClaimView(
                 'organisation_detail',
                 kwargs={'pk': self.object.organisation.pk}
             )
+
+
+
+
+
 class ServiceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Service
     form_class = ServiceForm

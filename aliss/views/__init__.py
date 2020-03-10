@@ -36,6 +36,7 @@ from .location import (
 )
 from .service import (
     ServiceCreateView,
+    ServiceCreateClaimView,
     ServiceUpdateView,
     ServiceDetailEmbeddedMapView,
     ServiceDetailView,
