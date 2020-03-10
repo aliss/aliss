@@ -49,6 +49,10 @@ urlpatterns = [
         OrganisationSearchView.as_view(),
         name='organisation_search_results'
         ),
+    url(r'^search-service/$',
+        OrganisationSearchServiceView.as_view(),
+        name='organisation_search_results_service'
+        ),
     url(r'^(?P<pk>[0-9A-Za-z\-]+)/locations/create/$',
         LocationCreateView.as_view(),
         name='location_create'

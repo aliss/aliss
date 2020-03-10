@@ -1,0 +1,12 @@
+{% if services %}
+    <div class="location{% if services|length > 1 %} multiple{% endif %}">
+        {% for service in services %}
+        <a href="{% url 'service_detail_slug' service.slug %}" class="icon-link">
+            <span class="icon">
+                <i class="far fa-handshake"></i>
+            </span>
+            {{ service.name }}
+        </a>
+        {% endfor %}
+    </div>
+{% endif %}

@@ -107,13 +107,6 @@ class OrganisationCreateView(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-
-
-
-
-
-
-
 class OrganisationCreateServiceView(LoginRequiredMixin, CreateView):
     model = Organisation
     template_name = 'organisation/create_service.html'
@@ -182,15 +175,6 @@ class OrganisationCreateServiceView(LoginRequiredMixin, CreateView):
         msg = '<p>{name} has been successfully created.</p>'.format(name=self.object.name)
         messages.success(self.request, msg)
         return HttpResponseRedirect(self.get_success_url())
-
-
-
-
-
-
-
-
-
 
 
 class OrganisationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -387,6 +371,48 @@ class OrganisationSearchView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super(OrganisationSearchView, self).get_queryset()
+        connections.create_connection(
+            hosts=[settings.ELASTICSEARCH_URL], timeout=20, http_auth=(settings.ELASTICSEARCH_USERNAME, settings.ELASTICSEARCH_PASSWORD))
+        queryset = Search(index='organisation_search', doc_type='organisation')
+        queryset = self.filter_queryset(queryset)
+        results = keyword_order(queryset)
+
+        if self.request.user.is_authenticated and self.request.user.is_staff:
+            has_services = self.request.GET.get('has_services')
+        else:
+            has_services = True
+
+        #TODO: This is very inefficient, we need to filter down to organisations with services before this stage
+        if has_services:
+            queryset = Organisation.with_services().filter(id__in=results["ids"]).order_by(results["order"]).prefetch_related('services')
+        else:
+            queryset = Organisation.objects.filter(id__in=results["ids"]).order_by(results["order"]).prefetch_related('services')
+        return queryset
+
+        
+class OrganisationSearchServiceView(ListView):
+    model = Organisation
+    template_name = 'organisation/search-results-service.html'
+    paginate_by = 10
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        return self.render_to_response(self.get_context_data())
+
+    def filter_queryset(self, queryset):
+        query = self.request.GET.get('q')
+        claimed_status = self.request.GET.get('is_claimed')
+        if claimed_status:
+            queryset = filter_by_claimed_status(queryset, claimed_status)
+        if query:
+            if self.request.user.is_authenticated() and (self.request.user.is_staff):
+                queryset = filter_organisations_by_query(queryset, query)
+            else:
+                queryset = filter_organisations_by_query_published(queryset, query)
+        return queryset
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super(OrganisationSearchServiceView, self).get_queryset()
         connections.create_connection(
             hosts=[settings.ELASTICSEARCH_URL], timeout=20, http_auth=(settings.ELASTICSEARCH_USERNAME, settings.ELASTICSEARCH_PASSWORD))
         queryset = Search(index='organisation_search', doc_type='organisation')

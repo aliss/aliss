@@ -55,40 +55,19 @@
         <!-- {% include 'partials/forms/errors.html' with form=form %} -->
         {% include 'partials/forms/errors.html' with form=claim_form %}
         <!-- HERE WE HAVE THE START OF THE PAGE -->
-        <form method="post" class="organisation-form-service" enctype="multipart/form-data">
-          {% csrf_token %}
-          {% include 'organisation/forms/organisation_form_service.html' %}
 
 
 
-          <div class="inline-claim">
-            <input id="data_standard_agreement_modal" type="checkbox" name="claim" {% if show_claim_form%} checked
-              {% endif %}>
-            <label for="data_standard_agreement_modal">
-              <b>I am a representative of this service for </b>
-              <span data-tooltip aria-haspopup="true" class="has-tip right" data-disable-hover="false" tabindex="2"
-                title="By checking this box you claim editorial control of the organisation. This ensures only you can make changes without approval of the ALISS team.">
-                <i class="fa fa-question-circle" aria-hidden="true"></i>
-              </span>
-            </label>
-            <br /><br />
-            <div class="claim-form">
-              {% include 'claim/forms/claim_form.html' with form=claim_form %}
-            </div>
-          </div>
 
-          <br />
-          <div class="submit">
-            <input type="submit" class="secondary" value="Submit">
-          </div>
-          <br />
-        </form>
-      </div>
 
-      <div class="cell small-12 medium-4 large-4">
-        <div class="pad">
-          {% include 'partials/breadcrumb.html' with progress=1 %}
-        </div>
+
+
+
+        
+
+
+
+
       </div>
     </div>
   </section>
@@ -115,7 +94,7 @@
       $('#data_standard_accept').click(handleDataStandardAccepted);
       $('#data_standard_decline').click(handleDataStandardDeclined);
     };
-
+    
     $('input#data_standard_agreement_modal').change(handleClaimFormWithModal);
     handleClaimFormWithModal();
 
