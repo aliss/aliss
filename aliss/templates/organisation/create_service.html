@@ -56,15 +56,16 @@
 
 
     
-  <p>ssss</p>
-        
 
         
-        <p><a href="{% url 'potential_create' %}">Add or edit another organisation</a></p>
 
-
-
-
+        <a id="add-service-action" href="{% url 'service_create_service' pk=object.pk %}" class="icon-link primary">
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+          Add service
+        </a>
+        
 
 
 

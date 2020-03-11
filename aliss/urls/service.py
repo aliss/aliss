@@ -11,6 +11,7 @@ from aliss.views import (
     ServiceProblemUpdateView,
     ServiceCoverageView,
     ServiceEmailView,
+    ServiceCreateServiceView,
     ServiceAtLocationDelete
 )
 
@@ -72,5 +73,9 @@ urlpatterns = [
             template_name='service/report_problem_thanks.html'
         ),
         name='service_report_problem_thanks'
+    ),
+    url(r'^create-test/$',
+        ServiceCreateServiceView.as_view(),
+        name='service_create_test'
     ),
 ]

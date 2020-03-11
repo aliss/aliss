@@ -79,6 +79,68 @@ class ServiceCreateView(
                 'organisation_detail',
                 kwargs={'pk': self.object.organisation.pk}
             )
+
+class ServiceCreateServiceView(LoginRequiredMixin, CreateView):
+    model = Organisation
+    template_name = 'service/create-service.html'
+
+    def get_success_url(self):
+        return reverse('service_create_service', kwargs={'pk': self.object.pk })
+
+    def send_new_org_email(self, organisation):
+        message = '{organisation} has been added to ALISS by {user}.'.format(organisation=organisation, user=organisation.created_by)
+        if organisation.published:
+            message += '\n\nIt has automatically been published. '
+            message += 'You view the new organisation here: {link}'.format(
+                link=self.request.build_absolute_uri(reverse('organisation_detail_slug', kwargs={ 'slug': self.object.slug }))
+            )
+        else:
+            message += '\n\nGo to {link} to approve it.'.format(link=self.request.build_absolute_uri(reverse('organisation_unpublished')))
+
+        send_mail(
+            '{organisation} was added on ALISS'.format(organisation=organisation),
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            ['hello@aliss.org'],
+            fail_silently=True,
+        )
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        claim_form = None
+        self.object = None
+
+        if request.POST.get('claim'):
+            claim_form = ClaimForm(request.POST, prefix='claim')
+
+        claim_valid = (claim_form == None or claim_form.is_valid())
+        form_valid = form.is_valid()
+        if (form_valid and claim_valid):
+            return self.form_valid(form, claim_form)
+        else:
+            return self.form_invalid(form, claim_form)
+
+    def form_invalid(self, form, claim_form):
+        return self.render_to_response(self.get_context_data(form=form, claim_form=claim_form))
+
+    def form_valid(self, form, claim_form):
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.published = self.request.user.is_editor or self.request.user.is_staff
+        self.object.save()
+
+        if claim_form:
+            Claim.objects.create(
+                user=self.request.user, organisation=self.object,
+                comment=claim_form.cleaned_data.get('comment'))
+
+        self.send_new_org_email(self.object)
+        msg = '<p>{name} has been successfully created.</p>'.format(name=self.object.name)
+        messages.success(self.request, msg)
+        return HttpResponseRedirect(self.get_success_url())
+
+
+
 class ServiceCreateClaimView(
     LoginRequiredMixin,
     UserPassesTestMixin,

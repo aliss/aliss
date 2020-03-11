@@ -46,6 +46,7 @@ from .service import (
     ServiceProblemListView,
     ServiceCoverageView,
     ServiceEmailView,
+    ServiceCreateServiceView,
     ServiceAtLocationDelete,
 )
 from .claim import (
