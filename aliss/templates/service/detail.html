@@ -202,9 +202,6 @@
                 </div>
               </form>
             </div>
-
-    
-
             {% if user_can_edit %}
               <a title="Click here to edit this services information." href="{% url 'service_edit' pk=object.pk %}" class="icon-link">
                 <span class="icon">
@@ -221,7 +218,7 @@
               {% else %}
             <br>
             
-              <p>This service has been claimed. Only the person who has claimed can edit this information. If you want to suggest any changes please click on  <a style="color: #1e79bd" title="Click here to provide information to improve this listing." id="improve-listing_modal">
+              <p>This service has been claimed. Only the person who has claimed can edit this information. If you want to suggest any changes please click on  <a style="color: #1e79bd" title="Click here to provide information to improve this listing." id="improve-listing_modal" >
                 <span class="icon"> <i class="fas fa-comment"></i> </span> Improve this listing  </a> </p>
               
             {% endif %}
