@@ -642,6 +642,7 @@ readers do not read off random characters that represent icons */
 .#{$fa-css-prefix}-poo:before { content: fa-content($fa-var-poo); }
 .#{$fa-css-prefix}-portrait:before { content: fa-content($fa-var-portrait); }
 .#{$fa-css-prefix}-pound-sign:before { content: fa-content($fa-var-pound-sign); }
+.#{$fa-css-prefix}-user-md:before { content: fa-content($fa-user-md); }
 .#{$fa-css-prefix}-power-off:before { content: fa-content($fa-var-power-off); }
 .#{$fa-css-prefix}-print:before { content: fa-content($fa-var-print); }
 .#{$fa-css-prefix}-product-hunt:before { content: fa-content($fa-var-product-hunt); }

@@ -112,7 +112,7 @@ def get_icon(category):
         'education-employability': 'fa-university',
         'children-families': 'fa-child',
         'sexual-health': 'fa-heart',
-        'covid-19': 'fa-medkit'
+        'covid-19': 'fa-user-md'
     }
     return icons.get(category.slug)
 
