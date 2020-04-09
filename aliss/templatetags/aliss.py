@@ -111,7 +111,8 @@ def get_icon(category):
         'activity': 'fa-bolt',
         'education-employability': 'fa-university',
         'children-families': 'fa-child',
-        'sexual-health': 'fa-heart'
+        'sexual-health': 'fa-heart',
+        'covid-19': 'fa-medkit'
     }
     return icons.get(category.slug)
 
