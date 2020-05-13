@@ -30,6 +30,10 @@ urlpatterns = [
         TemplateView.as_view(template_name="about.html"),
         name='about'
     ),
+    url(r'^help/$',
+        TemplateView.as_view(template_name="help.html"),
+        name='help'
+    ),
     url(r'^access-to-information/$',
         TemplateView.as_view(template_name="landing-page-users.html"),
         name='landing_page_users'

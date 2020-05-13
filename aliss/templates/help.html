@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% load static %} {% block title %}Help - ALISS{% endblock %} {% block meta_schema %}
+<meta property="og:title" content="Help - ALISS" />
+<meta name="twitter:title" content="Help - ALISS" />
+<meta name="description" content="We believe that people of Scotland should be able to access the information they need to help them live well.">
+<meta property="og:description" content="We believe that people of Scotland should be able to access the information they need to help them live well." />
+<meta name="twitter:description" content="We believe that people of Scotland should be able to access the information they need to help them live well." /> {% endblock %} {% block container %}
+<main class="main" role="main">
+    <section id="banner">
+        <div class="banner" style="background-image: url('{% static 'img/alliance.jpg' %}');">
+            <img alt="" src="{% static 'img/alliance.jpg' %}">
+        </div>
+    </section>
+    <article id="content">
+        <div class="row">
+            <div class="columns content">
+                <div class="copy-container">
+                    <h1>Help Center</h1>
+                    <h3>ALISS </h3>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam, consequatur?</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi sequi harum nemo laborum officia, suscipit temporibus maxime aspernatur saepe doloremque tempore vitae, a alias illo perferendis possimus necessitatibus? Eius delectus
+                        ea, fuga tempore recusandae sint maxime corporis suscipit quos vel, quod incidunt corrupti nostrum neque error doloribus harum. Aut, consequatur!</p>
+                    <p>ALISS key objectives are:</p>
+                    <ul>
+                        <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, eius.</li>
+                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam blanditiis nam dolorem cum repudiandae dolor magnam culpa, doloribus odit dolore ullam ex unde ratione, voluptas facere neque quasi sequi hic.</li>
+
+                    </ul>
+                    <br/>
+                    <h5>Contact us</h5>
+                    <p><strong>Email:</strong> <a title="Click here to contact us on email at hello@aliss.org (This will open your email client)." href="mailto:hello@aliss.org">hello@aliss.org</a>
+                        <br/><strong>Phone:</strong> 0141 4040239</p>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+{% endblock %}

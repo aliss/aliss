@@ -94,6 +94,10 @@
                                 <li{% if request.resolver_match.url_name == 'organisation_create' or request.resolver_match.url_name == 'organisation_search' %} class="active"{% endif %}>
                                     <a title="Click here to add an organisation." href="{% url 'potential_create' %}">Add an organisation</a>
                                 </li>
+                                <li{% if request.resolver_match.url_name == 'help' %} class="active"{% endif %}>
+                                    <a title="Click here to navigate to the about us page." href="{% url 'help' %}">Help Center</a>
+                                </li>
+                              
                             </ul>
                         </nav>
                         {% include 'partials/social.html' %}
