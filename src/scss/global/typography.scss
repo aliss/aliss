@@ -274,14 +274,6 @@ table {
         min-height: 250px;
         max-height: 400px;
     }
-    .table_head {
-        font-size: 15px;
-    }
-    .table_h {
-        font-size: 120%;
-        font-weight: lighter;
-        color: black;
-    }
     @include small {
         height: auto;
         min-height: 0;
