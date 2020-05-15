@@ -83,10 +83,11 @@
                         <nav role="navigation">
                             <ul>
                                 <li{% if request.resolver_match.url_name == 'homepage' or request.resolver_match.url_name == 'search' %} class="active"{% endif %}>
-                                    <a title="Click here to navigate to the search page." href="{% url 'homepage' %}">Search</a>
+                                    <a title="Click here to navigate to the search page." href="{% url 'homepage' %}"><i class="fas fa-search"></i> Search</a>
                                 </li>
                                 <li{% if request.resolver_match.url_name == 'about' %} class="active"{% endif %}>
-                                    <a title="Click here to navigate to the about us page." href="{% url 'about' %}">About</a>
+                                    <a title="Click here to navigate to the about us page." href="{% url 'about' %}"><i class="fa fa-info-circle"></i>
+ About</a>
                                 </li>
                                 <li>
                                     <a title="Visit Medium.com for the latest news and updates on ALISS. (This page will open in a new window)" href="https://medium.com/@ALISSProgramme" target="_blank">News</a>
@@ -95,7 +96,8 @@
                                     <a title="Click here to add an organisation." href="{% url 'potential_create' %}">Add an organisation</a>
                                 </li>
                                 <li{% if request.resolver_match.url_name == 'help' %} class="active"{% endif %}>
-                                    <a title="Click here to navigate to the about us page." href="{% url 'help' %}">Help Center</a>
+                                    <a title="Click here to navigate to the about us page." href="{% url 'help' %}"><i class="fa fa-question-circle" aria-hidden="true"></i>
+ Help Center</a>
                                 </li>
                               
                             </ul>
