@@ -49,7 +49,7 @@
                         </div>
                         <ul>
                             <li>
-                                <a title="Click here to logout." href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                <a title="Click here to logout." href="{% url 'logout' %}"> Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="account-info">
                         <ul>
                             <li{% if request.resolver_match.url_name == 'login' %} class="active"{% endif %}>
-                                <a title="Click here to log in." href="{% url 'login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                                <a title="Click here to log in." href="{% url 'login' %}"></i>
  Log in</a>
                             </li>
                             <li{% if request.resolver_match.url_name == 'signup' %} class="active"{% endif %}>
@@ -84,21 +84,21 @@
                         <nav role="navigation">
                             <ul>
                                 <li{% if request.resolver_match.url_name == 'homepage' or request.resolver_match.url_name == 'search' %} class="active"{% endif %}>
-                                    <a title="Click here to navigate to the search page." href="{% url 'homepage' %}"><i class="fas fa-search"></i> Search</a>
+                                    <a title="Click here to navigate to the search page." href="{% url 'homepage' %}"></i> Search</a>
                                 </li>
                                 <li{% if request.resolver_match.url_name == 'about' %} class="active"{% endif %}>
-                                    <a title="Click here to navigate to the about us page." href="{% url 'about' %}"><i class="fa fa-info-circle"></i>
+                                    <a title="Click here to navigate to the about us page." href="{% url 'about' %}">
  About</a>
                                 </li>
                                 <li>
                                     <a title="Visit Medium.com for the latest news and updates on ALISS. (This page will open in a new window)" href="https://medium.com/@ALISSProgramme" target="_blank">News</a>
                                 </li>
                                 <li{% if request.resolver_match.url_name == 'organisation_create' or request.resolver_match.url_name == 'organisation_search' %} class="active"{% endif %}>
-                                    <a title="Click here to add an organisation." href="{% url 'potential_create' %}"><i class="fa fa-building" aria-hidden="true"></i>
+                                    <a title="Click here to add an organisation." href="{% url 'potential_create' %}"></i>
  Add an organisation</a>
                                 </li>
                                 <li{% if request.resolver_match.url_name == 'help' %} class="active"{% endif %}>
-                                    <a title="Click here to navigate to the about us page." href="{% url 'help' %}"><i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    <a title="Click here to navigate to the about us page." href="{% url 'help' %}"></i>
  Help Center</a>
                                 </li>
                               
