@@ -55,8 +55,8 @@ class ALISSUser(AbstractBaseUser, PermissionsMixin):
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'
         ),
-    )
-
+    ) 
+    is_account_owner= models.BooleanField(default=False)
     is_editor = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     name = models.CharField(max_length=50)
