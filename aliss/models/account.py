@@ -54,7 +54,7 @@ class ALISSUser(AbstractBaseUser, PermissionsMixin):
         help_text=_(
             'Designates whether this user should be treated as active. '
             'Unselect this instead of deleting accounts.'
-        ),
+        ), 
     ) 
     is_account_owner= models.BooleanField(default=False)
     is_editor = models.BooleanField(default=False)
@@ -62,8 +62,8 @@ class ALISSUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=50)
     postcode = models.CharField(max_length=9, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
-
     saved_services = models.ManyToManyField('aliss.Service', blank=True)
+    
     helpful_services = models.ManyToManyField(
         'aliss.Service',
         blank=True,

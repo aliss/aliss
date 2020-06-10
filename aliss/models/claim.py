@@ -22,7 +22,7 @@ class Claim(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey('aliss.ALISSUser')
     organisation = models.ForeignKey('aliss.Organisation')
-    service = models.ForeignKey('aliss.Service')
+    service = models.ForeignKey('aliss.Service', null=True, blank=True)
     phone = models.CharField(max_length=30, default="")
     comment = models.TextField()
     status = models.IntegerField(choices=STATUS_CHOICES, default=UNREVIEWED)
