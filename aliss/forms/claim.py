@@ -1,7 +1,7 @@
 from django import forms
 
 from aliss.models import Claim
-
+from aliss.models import Claim, Organisation, ALISSUser
 
 class ClaimForm(forms.Form):
     comment = forms.CharField(required=True,
@@ -34,4 +34,3 @@ class ClaimUpdateForm(forms.ModelForm):
             'status',
         )
         error_css_class = 'has-error'
-

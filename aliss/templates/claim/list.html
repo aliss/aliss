@@ -72,6 +72,7 @@
               {% elif claim.status == claim.CONFIRMED %}
                 <div class="edit-options">
                   <form method="post" action="{% url 'claim_detail' pk=claim.pk %}">
+                  {% comment %} <form method='post' action="{% url 'account_is_account_owner' pk=object.pk %}"> {% endcomment %}
                     {% csrf_token %}
                     <input type="hidden" name="status" value="{{ claim.REVOKED }}" />
                     <button href="#" class="txt-button alert icon-link">
@@ -82,6 +83,8 @@
                     </button>
                   </form>
                 </div>
+
+                   {% csrf_token %}
               {% elif claim.status == claim.DENIED or claim.status == claim.REVOKED %}
                 <div class="edit-options">
                   <form method="post" action="{% url 'claim_detail' pk=claim.pk %}">

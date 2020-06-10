@@ -14,7 +14,7 @@ from braces.views import (
 )
 
 from aliss.forms import ClaimUpdateForm, ClaimForm
-from aliss.models import Claim, Organisation
+from aliss.models import Claim, Organisation, ALISSUser
 
 
 class ClaimListView(StaffuserRequiredMixin, ListView):

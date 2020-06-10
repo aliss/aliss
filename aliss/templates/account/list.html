@@ -12,6 +12,9 @@
         <li>
           <a title="The non-editor count is: {{ user_count }}." href="{% query_transform request editor='false' page=None %}" {% if request.GET.editor == 'false' %}class="active"{% endif %}>Non-editors ({{ user_count }})</a>
         </li>
+        <li>
+          <a title="The Account owner count is: {{ account_owner_count }}." href="{% query_transform request account_owner='true' page=None %}" {% if request.GET.account_owner == 'true' %}class="active"{% endif %}>Account Owner ({{ account_owner_count }})</a>
+        </li>
       </ul>
       <div class="filter user-search">
         <form>
