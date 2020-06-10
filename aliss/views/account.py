@@ -118,6 +118,7 @@ class AccountListView(StaffuserRequiredMixin, FilterView):
                 queryset = queryset.filter(is_editor=False)
 
         return queryset
+    
     def get_queryset_owner(self):
         querysetowner = super(AccountListView, self).get_queryset()
 
@@ -126,7 +127,7 @@ class AccountListView(StaffuserRequiredMixin, FilterView):
                 queryset = queryset.filter(
                     Q(is_account_owner=True) | Q(is_staff=True)
                 )
-            elif self.request.GET.get('account owner') == 'false':
+            elif self.request.GET.get('account_owner') == 'false':
                 queryset = queryset.filter(is_account_owner=False)
 
         return querysetowner
