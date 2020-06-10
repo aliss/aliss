@@ -93,7 +93,7 @@ class OrganisationCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form, claim_form):
         self.object = form.save(commit=False)
         self.object.created_by = self.request.user
-        self.object.published = self.request.user.is_editor or self.request.user.is_staff
+        self.object.published = self.request.user.is_editor or self.request.user.is_account_owner or self.request.user.is_staff
         self.object.save()
 
         if claim_form:
@@ -213,7 +213,7 @@ class OrganisationPotentialCreateView(MultipleObjectMixin, TemplateView):
         queryset = Search(index='organisation_search', doc_type='organisation')
         query = self.request.GET.get('q')
         if query:
-            if self.request.user.is_authenticated() and (self.request.user.is_editor or self.request.user.is_staff):
+            if self.request.user.is_authenticated() and (self.request.user.is_editor or self.request.user.is_account_owner or self.request.user.is_staff):
                 queryset = filter_organisations_by_query(queryset, query)
             else:
                 queryset = filter_organisations_by_query_published(queryset, query)

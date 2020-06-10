@@ -99,6 +99,8 @@ class AccountListView(StaffuserRequiredMixin, FilterView):
         context = super(AccountListView, self).get_context_data(**kwargs)
         context['editor_count'] = ALISSUser.objects.filter(
             Q(is_editor=True) | Q(is_staff=True)).count()
+        context['account_owner_count'] = ALISSUser.objects.filter(
+            Q(is_account_owner=True) | Q(is_staff=True)).count()
         context['user_count'] = ALISSUser.objects.filter(
             is_editor=False).count()
 
@@ -116,7 +118,18 @@ class AccountListView(StaffuserRequiredMixin, FilterView):
                 queryset = queryset.filter(is_editor=False)
 
         return queryset
+    def get_queryset_owner(self):
+        querysetowner = super(AccountListView, self).get_queryset()
 
+        if self.request.GET.get('account_owner', None):
+            if self.request.GET.get('account_owner') == 'true':
+                queryset = queryset.filter(
+                    Q(is_account_owner=True) | Q(is_staff=True)
+                )
+            elif self.request.GET.get('account owner') == 'false':
+                queryset = queryset.filter(is_account_owner=False)
+
+        return querysetowner
 
 class AccountDetailView(StaffuserRequiredMixin, DetailView):
     model = ALISSUser
@@ -436,7 +449,38 @@ class AccountIsEditor(StaffuserRequiredMixin, View):
             url = reverse('account_detail', kwargs={'pk': user.pk})
 
         return HttpResponseRedirect(url)
+    
+class AccountIsOwner(StaffuserRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        user = get_object_or_404(ALISSUser, pk=self.kwargs['pk'])
 
+        if user.is_account_owner:
+            user.is_account_owner = False
+            user.save()
+            messages.success(
+                self.request,
+                'User {username} no longer owner'.format(
+                    username=user.get_full_name()
+                )
+            )
+        else:
+            user.is_editor = True
+            user.save()
+            messages.success(
+                self.request,
+                'User {username} is now an owner'.format(
+                    username=user.get_full_name()
+                )
+            )
+
+        next = self.request.POST.get('next', '')
+        if next:
+            url = next
+        else:
+            url = reverse('account_detail', kwargs={'pk': user.pk})
+
+        return HttpResponseRedirect(url)
+    
 class AccountMyReviews(LoginRequiredMixin, TemplateView):
     template_name = 'account/my_reviews.html'
 

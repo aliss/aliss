@@ -47,6 +47,7 @@ def user_contributions():
     admins         = ALISSUser.objects.exclude(email="technical@aliss.org").filter(is_staff=True)
     alliance_users = ALISSUser.objects.filter(email__icontains="alliance-scotland.org.uk")
     editors        = ALISSUser.objects.filter(is_editor=True).exclude(email="technical@aliss.org").exclude(is_staff=True)
+    account_owner       = ALISSUser.objects.filter(is_account_owner=True).exclude(email="technical@aliss.org").exclude(is_staff=True)
     other_users    = ALISSUser.objects.exclude(email="technical@aliss.org").difference(alliance_users, editors)
 
     published      = Organisation.with_services().filter(published=True)
@@ -65,6 +66,7 @@ def user_contributions():
     print(" - Total number:",    ALISSUser.objects.count())
     print(" - Admin status:",    admins.count())
     print(" - Editor status:",   editors.count())
+    
     print(" - [email]@alliance-scotland.org.uk:", alliance_users.count())
     print(" - Basic users:", other_users.count())
 
