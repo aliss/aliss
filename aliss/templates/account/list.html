@@ -6,16 +6,20 @@
     <div class="columns">
       <h4>Users</h4>
       <ul class="claim-type">
+      {% comment %} TODO: Inprove the account owner list {% endcomment %}
+        <li>
+          <a title="The account owner count is: {{ account_owner_count }}."  href="{% query_transform request user='true' page=None %}{% query_transform request editor='true' page=None %}"{% if request.GET.editor == 'false' %}class="active"{% endif %}>Account Owner({{ account_owner_count }})</a>
+        </li>
+        {% comment %} TODO {% endcomment %}
         <li>
           <a title="The editor count is: {{ editor_count }}." href="{% query_transform request editor='true' page=None %}" {% if request.GET.editor == 'true' %}class="active"{% endif %}>Editors ({{ editor_count }})</a>
         </li>
         <li>
           <a title="The non-editor count is: {{ user_count }}." href="{% query_transform request editor='false' page=None %}" {% if request.GET.editor == 'false' %}class="active"{% endif %}>Non-editors ({{ user_count }})</a>
         </li>
-         <li>
-          <a title="The Account Owner count is: {{ account_owner_count }}." href="{% query_transform request user='false' page=None %}"href="{% query_transform request editor='false' page=None %}" {% if request.GET.editor == 'false' and request.GET.user == 'false'%}class="active"{% endif %}>Account Owner ({{ account_owner_count }})</a>
-        </li>
+        
       </ul>
+
       <div class="filter user-search">
         <form>
           <label>Search users:</label>

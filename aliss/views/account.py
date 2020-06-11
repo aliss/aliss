@@ -100,7 +100,7 @@ class AccountListView(StaffuserRequiredMixin, FilterView):
         context['editor_count'] = ALISSUser.objects.filter(
             Q(is_editor=True) | Q(is_staff=True)).count()
         context['account_owner_count'] = ALISSUser.objects.filter(
-            Q(is_account_owner=True) | Q(is_staff=True)).count()
+            is_account_owner=True).count()
         context['user_count'] = ALISSUser.objects.filter(
             is_editor=False).count()
 
