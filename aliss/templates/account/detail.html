@@ -30,6 +30,15 @@
                   </span>
                   Make user editor
                 </button>
+                <form method='post' action="{% url 'account_is_account_owner' pk=object.pk %}">
+                  {% csrf_token %}
+                  <input type='hidden' name='next' value="{{ request.get_full_path }}" />
+                  <button type="submit" class="txt-button icon-link">
+                    <span class="icon">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    Make user Account Owner
+                  </button>
               </form>
             {% endif %}
           {% endif %}

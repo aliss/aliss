@@ -465,7 +465,7 @@ class AccountIsOwner(StaffuserRequiredMixin, View):
                 )
             )
         else:
-            user.is_editor = True
+            user.is_account_owner = True
             user.save()
             messages.success(
                 self.request,

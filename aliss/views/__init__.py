@@ -19,6 +19,7 @@ from .account import (
     AccountRecommendationListDeleteView,
     AccountRecommendationListPrintView,
     AccountIsEditor,
+    AccountIsOwner,
     AccountMyReviews,
     AccountMyReviewsApprove,
 )
