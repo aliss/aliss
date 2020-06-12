@@ -28,7 +28,7 @@ class ALISSUserAdmin(admin.ModelAdmin, ExportCsvMixin):
         class Wrapper(admin.FieldListFilter):
          def __new__(cls, *args, **kwargs):
           search_fields = ['email']
-    list_display = ['email', 'name', 'is_editor', 'is_staff', 'date_joined']
+    list_display = ['email', 'name', 'is_editor', 'is_account_owner', 'is_staff', 'date_joined']
     ordering = ['-date_joined', ]
     list_filter = ('is_editor'),
     actions = ['export_as_csv']
