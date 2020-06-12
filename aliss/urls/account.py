@@ -173,7 +173,7 @@ urlpatterns = [
     url(r'^user/(?P<pk>.+)/editor/$',
         AccountIsEditor.as_view(),
         name='account_is_editor'
-    )
+    ),
     url(r'^user/(?P<pk>.+)/account_owner/$',
         AccountIsOwner.as_view(),
         name='account_is_account_owner'
