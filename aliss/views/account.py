@@ -419,7 +419,7 @@ class AccountAdminDashboard(StaffuserRequiredMixin, TemplateView):
 
         return context
     
-class AccountOwnerDashboard(StaffuserRequiredMixin, TemplateView):
+class AccountOwnerDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'account/dashboard.html'
 
     def get_context_data(self, **kwargs):
