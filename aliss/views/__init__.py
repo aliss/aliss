@@ -10,6 +10,7 @@ from .account import (
     AccountSaveServiceView,
     AccountRemoveSavedServiceView,
     AccountAdminDashboard,
+    AccountDashboard,
     AccountListView,
     AccountDetailView,
     AccountServiceHelpfulView,

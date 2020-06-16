@@ -18,6 +18,8 @@
   <section id="my_account" class="grid-container">
     {% if request.user.is_staff %}
       {% include 'account/partials/admin_menu.html' %}
+      {% elif request.user.is_account_owner %}
+      {% include 'account/partials/owner_menu.html' %}
     {% endif %}
     <div class="grid-x my-account-links">
       <div class="cell small-6 medium-3 large-3">

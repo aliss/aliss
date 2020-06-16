@@ -13,6 +13,7 @@ from aliss.views import (
     AccountSaveServiceView,
     AccountRemoveSavedServiceView,
     AccountAdminDashboard,
+    AccountOwnerDashboard,
     AccountListView,
     AccountDetailView,
     AccountServiceHelpfulView,
